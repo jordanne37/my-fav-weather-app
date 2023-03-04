@@ -9,7 +9,6 @@ var futureEl = document.querySelector(".future");
 var formEl = document.querySelector(".city-form");
 var dateEl = document.querySelector(".date");
 
-
 var cityWeather = function(event) {
     event.preventDefault();
     var theInfo = inputEl.value.trim();
@@ -28,7 +27,8 @@ function currentWeather(weatherQuery) {
     fetch(geoApiUrl)
     .then(response=> response.json())
     .then(data => {
-    
+        
+        
         console.log(data)
         tempEl.textContent = data.main.temp
         windEl.textContent = data.wind.speed + " mp/h"
@@ -45,9 +45,21 @@ function currentWeather(weatherQuery) {
     .then(data => {
     //console.log(data)
 
-    // var currentDate = data.coord.dt;
+    var currentDate = data.coord.dt;
     // var theCurrentDate = dayjs(JSON.stringify(currentDate)).format("MMMM D, YYYY")
     })
 }
 
+function futureWeather(weatherQuery) {
+    var geoApiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + weatherQuery+ "&appid=9f1c292ce1ea1de6d33b5afbe52ac1d9"
+    fetch(geoApiUrl)
+    .then(response=> response.json())
+    .then(data => {
+    const weatherApi = `https://api.openweathermap.org/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=912d45dc6bbe2ccd1b94d91571732ef8&units=imperial`
+        return fetch(weatherApi);
+    })
+    .then(response => response.json())
+    
 
+
+}
