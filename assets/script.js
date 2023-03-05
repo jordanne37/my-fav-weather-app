@@ -34,7 +34,7 @@ function currentWeather(weatherQuery) {
         .then(response => response.json())
         .then(data => {
         
-            var theCurrentDate = data.coord.dt;
+            var currentDate = data.coord.dt;
             var theCurrentDate = dayjs(JSON.stringify(currentDate)).format("MMMM D, YYYY")
         
         console.log(data)
@@ -69,16 +69,33 @@ function futureWeather(weatherQuery) {
             var theFutureDate =dayjs(JSON.stringify(futDate)).format("MMMM D, YYYY");
             if(date === "12:00:00") {
 
-            futWeather +=
+            futWeather += `
            
            <div class= "card flex-column future">
                 <div class="text-xl">${theFutureDate}</div>
                 <img class="mt-5 text-5xl self-center inline-flex"
                 src="https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png">
-
-                </img>
                 
+                <div class="flex flex-row items-center justify-center mt-6">
+                <div class="font-large text-5xl">${data.list[i].main.temp}°F</div>
+                <div class="flex flex-col items-center ml-6">
+                    <div>${data.list[i].weather[0].description}</div>
+                </div>
             </div>
+            <div class="flex-row justify-between mt-6">
+                <div class="flex flex-col items-center">
+                <div class="font-medium text-sm">Wind</div>
+                <div class="text-sm text-black">${data.list[i].wind.speed}mp/h</div>
+            </div>
+            <div class="flex-col items-center">
+                <div class="font-medium text-sm">Humidity</div>
+                <div class="text-sm text-black">${data.list[i].main.humidity}%</div>
+                </div>
+                </div>
+            </div>
+
+
+`
 futureEl.innerHTML = futWeather;
 
 
