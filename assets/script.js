@@ -9,6 +9,7 @@ var weathericonEl = document.querySelector(".weather-icon");
 var futureEl = document.querySelector(".future");
 var formEl = document.querySelector(".city-form");
 var dateEl = document.querySelector(".date")
+var searchEl = document.querySelector(".search-history");
 
 var cityWeather = function(event) {
     event.preventDefault();
@@ -50,6 +51,11 @@ function currentWeather(weatherQuery) {
     })
     .then(response => response.json())
     .then(data => {
+        let historyBtn = document.createElement("button")
+        historyBtn.innerHTML = weatherQuery
+        historyBtn.addEventListener("click", (event) => console.log(event.target.innerHTML))
+
+        searchEl.append(historyBtn)
     console.log(data)
    
     })
@@ -69,7 +75,7 @@ function futureWeather(weatherQuery) {
         console.log(data);
         var futWeather ="";
         console.log(futWeather)
-        for(var i =0; i <= data.list.length; i++) {
+        for(var i =0; i < data.list.length; i++) {
             var theDate = data.list[i].dt_txt.substr(11,8);
             console.log("New Date" + theDate);
             var futureDate = data.list[i].dt_txt.substr(0,11);
@@ -101,6 +107,9 @@ function futureWeather(weatherQuery) {
                                     </div>
                                 </div>
             `
+            console.log(futureEl)
+            console.log(futWeather)
+
             futureEl.innerHTML = futWeather;
            }
 
